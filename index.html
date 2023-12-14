@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Project 5: Neural Radiance Field (NeRF)</h1>
+
+    <article>
+        <header>
+            <h2>Part 1: Fit a Neural Field to a 2D Image</h2>
+            <p>
+                In this section, I built a MLP that learns an arbitrary 2D image. The input to the model is a positionally encoded coordinate from the learned 2D image and the outputs are the predicted color for that corresponding coordinate.
+                Positional encoding is key to optimizing the performance of the model because expanding the dimensionality of the input attributes to better representation of high frequency variations in color and geometry.
+                In this project, sinusoidal positional encoding was applied on all input coordinates to the model to expand coordinates from 2D into 42 dimensional representations. The loss function used was MSE, however both MSE and Peak signal-to-noise ratio (PSNR) were used to evaluate the model's performance.
+            </p>
+            
+            <h3>Summary of Training Procedure</h3>
+            <p>
+                The model was trained by using coordinates and pixels sampled randomly from the 2D image. 
+                The model was evaluated by passing in all coordinates from the orignal 2D image into the model in a single forward pass and reshaping the output into a evaluable image. 
+            </p>
+            
+            <h3>Parameters</h3>
+            <p>
+                Some parameters and hyper parameters I used for this model were number of linear layers, layer channel size, max frequency (for the positional encoding), learning rate, and batch size. In this project, I experimented with varying the number of layers and max frequency, L for the positional encoding. 
+                All other variables stayed constant. Particularly, my batch size per training epoch was 10000, learning rate was 1e-2, and channel size was 256. Below are my results.
+            </p>
+
+            <h3>Results</h3>
+
+            <h4>Learned Fox Image: Num Layers = 2, L = 10</h4>
+            <div class="image-container">
+                <div class="results-container">
+                    <figure>
+                        <img src="assets/fox_reg/fox_predicted_1.jpg" alt="Image 1">
+                        <figcaption>Epoch 1</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_reg/fox_predicted_50.jpg" alt="Image 2">
+                        <figcaption>Epoch 50</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_reg/fox_predicted_100.jpg" alt="Image 3">
+                        <figcaption>Epoch 100</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_reg/fox_predicted_200.jpg" alt="Image 4">
+                        <figcaption>Epoch 200</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_reg/fox_predicted_400.jpg" alt="Image 5">
+                        <figcaption>Epoch 400</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_reg/fox_predicted_800.jpg" alt="Image 6">
+                        <figcaption>Epoch 800</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_reg/fox_predicted_1000.jpg" alt="Image 7">
+                        <figcaption>Epoch 1000</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h4>Learned Fox Image: Num Layers = 3, L = 12</h4>
+            <div class="image-container">
+                <div class="results-container">
+                    <figure>
+                        <img src="assets/fox_tweaked/fox_predicted_1.jpg" alt="Image 1">
+                        <figcaption>Epoch 1</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_tweaked/fox_predicted_50.jpg" alt="Image 2">
+                        <figcaption>Epoch 50</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_tweaked/fox_predicted_100.jpg" alt="Image 3">
+                        <figcaption>Epoch 100</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_tweaked/fox_predicted_200.jpg" alt="Image 4">
+                        <figcaption>Epoch 200</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_tweaked/fox_predicted_400.jpg" alt="Image 5">
+                        <figcaption>Epoch 400</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_tweaked/fox_predicted_800.jpg" alt="Image 6">
+                        <figcaption>Epoch 800</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/fox_tweaked/fox_predicted_1000.jpg" alt="Image 7">
+                        <figcaption>Epoch 1000</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h4>Training and Validation Metrics</h4>
+            <p>Here are the results from incrementing both the number of layers and max frequency, L.
+                The green line represents training with num layers = 2 and L = 10. The red line represents training with num layers = 3 and L = 12.
+                It appears that the increased parameters (red) does slightly better.
+            </p>
+            <div class="metrics-container">
+                <figure>
+                    <img src="assets/fox_metrics/L_loss.png" alt="Image 1">
+                    <figcaption>Learning Loss Over Time</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/fox_metrics/L_PSNR.png" alt="Image 2">
+                    <figcaption>Learning PSNR Over Time</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/fox_metrics/v_loss.png" alt="Image 3">
+                    <figcaption>Validation Loss Over Time</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/fox_metrics/v_PSNR.png" alt="Image 4">
+                    <figcaption>Validation PSNR Over Time</figcaption>
+                </figure>
+            </div>
+
+            <h4>Learned Minions Image: Num Layers = 2, L = 10</h4>
+            <div class="image-container">
+                <div class="results-container">
+                    <figure>
+                        <img src="assets/minions_reg/minion_predicted_1.jpg" alt="Image 1">
+                        <figcaption>Epoch 1</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_reg/minion_predicted_50.jpg" alt="Image 2">
+                        <figcaption>Epoch 50</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_reg/minion_predicted_100.jpg" alt="Image 3">
+                        <figcaption>Epoch 100</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_reg/minion_predicted_200.jpg" alt="Image 4">
+                        <figcaption>Epoch 200</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_reg/minion_predicted_400.jpg" alt="Image 5">
+                        <figcaption>Epoch 400</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_reg/minion_predicted_800.jpg" alt="Image 6">
+                        <figcaption>Epoch 800</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_reg/minion_predicted_1000.jpg" alt="Image 7">
+                        <figcaption>Epoch 1000</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h4>Learned Minions Image: Num Layers = 3, L = 12</h4>
+            <div class="image-container">
+                <div class="results-container">
+                    <figure>
+                        <img src="assets/minions_tweaked/minion_predicted_1.jpg" alt="Image 1">
+                        <figcaption>Epoch 1</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_tweaked/minion_predicted_50.jpg" alt="Image 2">
+                        <figcaption>Epoch 50</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_tweaked/minion_predicted_100.jpg" alt="Image 3">
+                        <figcaption>Epoch 100</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_tweaked/minion_predicted_200.jpg" alt="Image 4">
+                        <figcaption>Epoch 200</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_tweaked/minion_predicted_400.jpg" alt="Image 5">
+                        <figcaption>Epoch 400</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_tweaked/minion_predicted_800.jpg" alt="Image 6">
+                        <figcaption>Epoch 800</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/minions_tweaked/minion_predicted_1000.jpg" alt="Image 7">
+                        <figcaption>Epoch 1000</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h4>Training and Validation Metrics</h4>
+            <p>Here are the results from incrementing both the number of layers and max frequency, L.
+                The yellow line represents training with num layers = 2 and L = 10. The purple line represents training with num layers = 3 and L = 12.
+                It appears that the increased parameters (purple) does slightly better.
+            </p>
+            <div class="metrics-container">
+                <figure>
+                    <img src="assets/minion_metrics/L_loss.png" alt="Image 1">
+                    <figcaption>Learning Loss Over Time</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/minion_metrics/L_PSNR.png" alt="Image 2">
+                    <figcaption>Learning PSNR Over Time</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/minion_metrics/v_loss.png" alt="Image 3">
+                    <figcaption>Validation Loss Over Time</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/minion_metrics/v_PSNR.png" alt="Image 4">
+                    <figcaption>Validation PSNR Over Time</figcaption>
+                </figure>
+            </div>
+
+            <h2>Part 2: Fit a Neural Radiance Field from Multi-view Images</h2>
+            <p>
+                In this section, I build a Neural Radiance Field to render a novel view of a Lego scene from the original NeRF paper. However, the images are lower resolution (200x200) and the cameras are preprocessed. 
+                In the dataset I am using, I have separate sets of cameras and images for training, validation, and testing. In order to render a novel view from 2D images, I followed the same procedure as outlined in the NeRF paper.
+            </p>
+
+            <h3>Summary of Training Procedure</h3>
+            <p>
+                One of the two inputs to the model are points that were sampled along rays (which were also sampled) from the training images. Likewise to fitting a 2D image, each of these points were positionally encoded before being passed into the model.
+                The other input to the model is the direction of the rays that each of the input points were sampled on. The directions are normalized to unit length and positionally encoded as well. The outputs of the Neural Radiance Field are a density and an rgb value corresponding to each input point.
+                The loss computed was between the output of the discrete volumetric rendering equation with the actual pixel value at the corresponding point. Validation metrics were calculated following the same procedure (sampling rays, then sampling points to pass into the NN). 
+                A validation image was generated using the first image provided in the validation set.
+            </p>
+
+            <h4>Sampled Rays and Points Visualization</h4>
+            <p>Here are examples of what the sampled rays and points look like.</p>
+
+            <div class="single-row-grid">
+                <figure>
+                    <img src="assets/rays/ray_each.png" alt="Image 1">
+                    <figcaption>100 Sampled Rays (1 Ray Per Image)</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/rays/ray_each_mag.png" alt="Image 2">
+                    <figcaption>100 Sampled Rays, 64 Sampled Points On Each</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/rays/ray_top_left.png" alt="Image 3">
+                    <figcaption>Sampling The Entire Top Left of an Image</figcaption>
+                </figure>
+            </div>
+            <h3>Parameters</h3>
+            <p>
+                Parameters and hyper parameters used in this section were 1000 training epochs, batch size of 10000 rays (64 samples per ray), learning rate of 5e-4, and max frequency L, of 10 and 4 for points and ray directions respectively. The loss function was MSE and the optimizer was Adam.
+            </p>
+
+            <h3>Results</h3>
+
+            <h4>Learned Lego Front Loader</h4>
+            <div class="image-container">
+                <div class="results-container">
+                    <figure>
+                        <img src="assets/lego_1k/lego_predicted_1.jpg" alt="Image 1">
+                        <figcaption>Epoch 1</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/lego_1k/lego_predicted_50.jpg" alt="Image 2">
+                        <figcaption>Epoch 50</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/lego_1k/lego_predicted_100.jpg" alt="Image 3">
+                        <figcaption>Epoch 100</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/lego_1k/lego_predicted_200.jpg" alt="Image 4">
+                        <figcaption>Epoch 200</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/lego_1k/lego_predicted_400.jpg" alt="Image 5">
+                        <figcaption>Epoch 400</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/lego_1k/lego_predicted_800.jpg" alt="Image 6">
+                        <figcaption>Epoch 800</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/lego_1k/lego_predicted_1000.jpg" alt="Image 7">
+                        <figcaption>Epoch 1000</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <h4>Training and Validation Metrics</h4>
+            <div class="metrics-container">
+                <figure>
+                    <img src="assets/lego_metrics/L_loss.png" alt="Image 1">
+                    <figcaption>Learning Loss Over Time</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/lego_metrics/L_PSNR.png" alt="Image 2">
+                    <figcaption>Learning PSNR Over Time</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/lego_metrics/v_loss.png" alt="Image 3">
+                    <figcaption>Validation Loss Over Time</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/lego_metrics/v_PSNR.png" alt="Image 4">
+                    <figcaption>Validation PSNR Over Time</figcaption>
+                </figure>
+            </div>
+
+            <h4>Rendered Novel Views</h4>
+            <p>These are novel views rendered with my model after 1k training epochs.</p>
+            <img src="lego_test.gif" class="centered-image">
+        </header>
+    </article>
+</body>
+</html>
+
+
+<style>
+.metrics-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* two columns */
+    grid-template-rows: auto; /* rows will size to content */
+    text-align: center;
+}
+
+.metrics-container img {
+    width: 75%; /* adjust image width to container */
+    height: auto; /* keep image aspect ratio */
+}
+
+.image-container {
+    position: relative;
+}
+
+.results-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* three columns */
+}
+
+.results-container img {
+    width: 75%;
+    height: auto;
+    display: block;
+}
+
+.single-row-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* creates three columns */
+    align-items: end; /* aligns all grid items to the end (bottom) */
+}
+
+.single-row-grid img {
+    width: 100%; /* makes the image fill the column */
+    height: auto; /* maintains aspect ratio */
+    align-self: end; /* aligns the image to the bottom of the grid area */
+}
+
+.centered-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%; /* or any other percentage or fixed size */
+  height: auto; /* maintains the aspect ratio */
+}
+</style>
