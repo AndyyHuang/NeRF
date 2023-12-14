@@ -1,4 +1,7 @@
 # Neural Radiance Field (NeRF) Implementation
+<p align="center"><img width="35%" alt="Screenshot 2023-12-13 at 5 13 17 PM" src="https://github.com/AndyyHuang/NeRF/assets/76765795/e150fa28-4ec4-4e31-b04e-dcc53c0906eb"></p>
+<p align="center">A novel rendering of a learned 3D scene.</p>
+
 In this project, I implemented a Neural Radiance Field (NeRF) as outlined in the original paper by Ben Mildenhall et al.
 
 ## Implementation Details
@@ -13,7 +16,15 @@ Again, the inputs to the model are randomly sampled 3D world coordinates and the
 <p align="center"><img width="722" alt="Screenshot 2023-12-13 at 5 02 24 PM" src="https://github.com/AndyyHuang/NeRF/assets/76765795/44cd2b8a-5867-4f36-a9db-efd5d9fbafdd"></p>
 <p align="center">Sinusoidal Encoding</p>
 
-The model yields two outputs: The predicted density and RGB value at that sampled 3D world coordinate. The loss was calculated over the groundtruth pixel RGB values of and the output of the discrete approximation of the volumetric rendering equation (using the predicted density and RGB value as the function's inputs). The loss function used was 
+The model yields two outputs: The predicted density and RGB value at that sampled 3D world coordinate. The loss was calculated over the groundtruth pixel RGB values of and the output of the discrete approximation of the volumetric rendering equation (using the predicted density and RGB value as the function's inputs). 
+
+<p align="center"><img width="595" alt="Screenshot 2023-12-13 at 5 02 53 PM" src="https://github.com/AndyyHuang/NeRF/assets/76765795/329c3877-75c9-458f-af98-f1d227451edc"></p>
+<p align="center">Continuous Volumetric Rendering Equation</p>
+
+<p align="center"><img width="523" alt="Screenshot 2023-12-13 at 5 03 18 PM" src="https://github.com/AndyyHuang/NeRF/assets/76765795/2aac573e-e1a1-4674-9e02-a91172321e0b"></p>
+<p align="center">Discrete Volumetric Rendering Equation</p>
+
+The loss function used was 
 I used MSE as the loss function, however both MSE and Peak signal-to-noise ratio (PSNR) were used to evaluate the model's performance. Loss was calculated by taking MSE of the outputs and groundtruth colors. As a side note, positional encoding helps optimize the performance of the model because expanding the dimensionality of the input attributes provides better representation of high frequency variations in color and geometry for the model to learn. Thus, sinusoidal positional encoding was applied on all input coordinates to the model to expand coordinates from 2D into 42 dimensional representations.
 
 <p align="center"><img width="254" alt="Screenshot 2023-12-13 at 5 02 32 PM" src="https://github.com/AndyyHuang/NeRF/assets/76765795/47242c64-78be-4b10-ab87-501bd5addc92"></p>
