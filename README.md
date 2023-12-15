@@ -67,5 +67,3 @@ Below are graphs of my learning/training and validation loss and PSNR over 1000 
 Below is a rendering of novel views on the trained model (1000 epochs).
 
 <p align="center"><img width="35%" alt="Screenshot 2023-12-13 at 5 13 17 PM" src="https://github.com/AndyyHuang/NeRF/assets/76765795/e150fa28-4ec4-4e31-b04e-dcc53c0906eb"></p>
-
-See the full report in index.html.
