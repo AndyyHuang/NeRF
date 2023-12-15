@@ -2,7 +2,7 @@
 <p align="center"><img width="35%" alt="Screenshot 2023-12-13 at 5 13 17 PM" src="https://github.com/AndyyHuang/NeRF/assets/76765795/e150fa28-4ec4-4e31-b04e-dcc53c0906eb"></p>
 <p align="center">A novel rendering of a learned 3D scene.</p>
 
-In this project, I implemented a Neural Radiance Field (NeRF) as outlined in the original paper by Ben Mildenhall et al.
+In this project, I implemented a Neural Radiance Field (NeRF) as outlined in the original paper by Ben Mildenhall et al. See the full report in index.html.
 
 ## Implementation Details
 <p align="center"><img width="880" alt="Screenshot 2023-12-13 at 5 13 17 PM" src="https://github.com/AndyyHuang/NeRF/assets/76765795/ac67dcbe-2d87-4b59-a1b1-80cfbc7d1264"></p>
